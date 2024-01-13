@@ -57,7 +57,7 @@ export const MainTable = ({courses, categories, onDelete}) => {
                                     <td className="whitespace-nowrap px-6 py-4">{item.totalChaper}</td>
                                     <td className="whitespace-nowrap px-6 py-4">{item.totalLesson}</td>
                                     <td className="whitespace-nowrap px-6 py-4">
-                                        <ButtonBlue label="Edit"  />
+                                        <ButtonBlue label="Edit"   />
                                     </td>
                                     <td className="whitespace-nowrap px-6 py-4">
                                         <ButtonRed label="Delete" onClick={() => onDelete(item.id)} />
