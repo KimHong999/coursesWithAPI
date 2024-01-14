@@ -15,7 +15,7 @@ function App() {
   const [courses, setCourses] = useState(courseData)
 
   const [selected, setSelected] = useState({})
-
+  const [selectCourse, setSelectCourse] = useState(null)
 
  
 
@@ -60,7 +60,7 @@ function App() {
   }
 
   const handleSelectedCourse = (id) => {
-    setSelected(courses.find((course)=>course.id===id))
+    setSelectCourse(courses.find((course)=>course.id===id))
   }
 
   
@@ -77,7 +77,7 @@ function App() {
         <div className='text-xl font-bold mt-8'>Course Management</div>
           <MainTable courses={courses} categories={categories} onDelete={handleDeleteCourse} onSelect={handleSelectedCourse} />
           <div className='flex justify-center item-center'>
-            <NewCourse categories={categories} onSave={handleSaveCourse} selected={selected}  />
+            <NewCourse categories={categories} onSave={handleSaveCourse} selected={selectCourse}  />
           </div>
       </div>
     </div>

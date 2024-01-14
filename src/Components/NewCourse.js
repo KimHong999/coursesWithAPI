@@ -88,7 +88,26 @@ export const NewCourse = ({categories, onSave, selected}) => {
     console.log("save",form)
 
 
+    console.log("se",selected)
     useEffect(()=>{
+        if(!selected){
+            setForm({
+                name:"", 
+                category_id:"", 
+                summarize:"",
+                chapters:[{
+                    id:uuidv4(),
+                    name:"",
+                    summarize:"",
+                    lessons:[{
+                        id:uuidv4(),
+                        name:"",
+                        content:""
+                    }]
+                }]
+            })
+            return 
+        }
         setForm(selected)
     },[selected])
    
