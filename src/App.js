@@ -59,6 +59,10 @@ function App() {
     setCourses(courses.filter((course) => course.id !== id))
   }
 
+  const handleSelectedCourse = (id) => {
+    setSelected(courses.find((course)=>course.id===id))
+  }
+
   
 
   console.log("course",courses)
@@ -71,9 +75,9 @@ function App() {
       </div>
       <div>
         <div className='text-xl font-bold mt-8'>Course Management</div>
-          <MainTable courses={courses} categories={categories} onDelete={handleDeleteCourse}  />
+          <MainTable courses={courses} categories={categories} onDelete={handleDeleteCourse} onSelect={handleSelectedCourse} />
           <div className='flex justify-center item-center'>
-            <NewCourse categories={categories} onSave={handleSaveCourse} />
+            <NewCourse categories={categories} onSave={handleSaveCourse} selected={selected}  />
           </div>
       </div>
     </div>

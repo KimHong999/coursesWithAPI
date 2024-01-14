@@ -3,7 +3,8 @@ import {  ButtonBlue, TextArea, TextFieldInput, TextSelect } from "./Input";
 import { NewChapter } from "./NewChapter";
 import { uuidv4 } from "../util";
 
-export const NewCourse = ({categories, onSave}) => {
+export const NewCourse = ({categories, onSave, selected}) => {
+
     const [form, setForm] = useState({
         name:"", 
         category_id:"", 
@@ -20,6 +21,8 @@ export const NewCourse = ({categories, onSave}) => {
         }]
     })
 
+
+    // ***** onChange *****
     const onChangeCourse = (e) => {
         const name = e.target.name;
         const value = e.target.value;
@@ -59,7 +62,7 @@ export const NewCourse = ({categories, onSave}) => {
     }
 
 
-
+    // ***** onSave *****
     const handleSaveCourse = () => {
         const data ={
             ...form,
@@ -84,6 +87,10 @@ export const NewCourse = ({categories, onSave}) => {
     }
     console.log("save",form)
 
+
+    useEffect(()=>{
+        setForm(selected)
+    },[selected])
    
     // console.log("save",form)
 

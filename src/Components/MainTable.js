@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { ButtonBlue, ButtonRed } from "./Input";
 
-export const MainTable = ({courses, categories, onDelete}) => {
+export const MainTable = ({courses, categories, onDelete, onSelect}) => {
 
      // ***** count data *****
      const data = useMemo (()=>{
@@ -57,7 +57,7 @@ export const MainTable = ({courses, categories, onDelete}) => {
                                     <td className="whitespace-nowrap px-6 py-4">{item.totalChaper}</td>
                                     <td className="whitespace-nowrap px-6 py-4">{item.totalLesson}</td>
                                     <td className="whitespace-nowrap px-6 py-4">
-                                        <ButtonBlue label="Edit"   />
+                                        <ButtonBlue label="Edit" onClick={()=> onSelect(item.id)}  />
                                     </td>
                                     <td className="whitespace-nowrap px-6 py-4">
                                         <ButtonRed label="Delete" onClick={() => onDelete(item.id)} />
