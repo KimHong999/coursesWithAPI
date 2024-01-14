@@ -29,12 +29,12 @@ export const NewCourse = ({categories, onSave}) => {
         })
     }
 
-    const onChangeChapter = (e, indexChapter) =>{
+    const onChangeChapter = (e, chapterIndex) =>{
         const name = e.target.name;
         const value = e.target.value;
 
         setForm((pre)=>{
-            pre.chapters[indexChapter][name] = value
+            pre.chapters[chapterIndex][name] = value
             return{
                 ...pre
             }
@@ -42,18 +42,20 @@ export const NewCourse = ({categories, onSave}) => {
         })
     }
 
-    const onChangeLesson = (e, indexChapter, indexLesson) => {
+    const onChangeLesson = (e, lessonIndex,  chapterIndex) => {
         const name = e.target.name;
         const value = e.target.value;
-        // console.log("chaper", indexChapter)
-        // console.log("les",indexLesson)
+        console.log("chaper", chapterIndex)
+        console.log("les",lessonIndex)
 
         setForm((pre)=>{
-            pre.chapters[indexChapter].lessons[indexLesson][name] = value
+            // console.log(pre.chapters)
+            pre.chapters[chapterIndex].lessons[lessonIndex][name] = value
             return{
                 ...pre
             }
         })
+        console.log("form", form)
     }
 
 
@@ -64,7 +66,21 @@ export const NewCourse = ({categories, onSave}) => {
             id : uuidv4()
         }
         onSave(data)
-        // setForm({name:"", category_id:"", summarize:""})
+        setForm({
+            name:"", 
+            category_id:"", 
+            summarize:"",
+            chapters:[{
+                id:uuidv4(),
+                name:"",
+                summarize:"",
+                lessons:[{
+                    id:uuidv4(),
+                    name:"",
+                    content:""
+                }]
+            }]
+        })
     }
     console.log("save",form)
 
@@ -87,7 +103,7 @@ export const NewCourse = ({categories, onSave}) => {
 
                 {
                     form?.chapters?.map((chapterForm, index)=>(
-                    <NewChapter key={index} chapterIndex={index} chapterForm={chapterForm} onChangeChapter={onChangeChapter} onChangeLesson={onChangeLesson}  />
+                    <NewChapter key={index} chapterIndex={index} chapterForm={chapterForm} onChangeChapter={onChangeChapter} onChangeLesson={onChangeLesson} setForm={setForm} form={form} />
                     ))
                 }
 

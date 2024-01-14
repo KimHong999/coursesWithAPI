@@ -20,32 +20,36 @@ function App() {
  
 
 
-
   // ***** Categories *****
-  const handleSaveCategory = (param) => {  
+  const handleSaveCategory = (param) => {
     const newCategory = {
       ...param,
-      id : uuidv4()
-    }
-    setCategories(categories.concat(newCategory))
-  }
+      id: uuidv4(),
+    };
+    setCategories(categories.concat(newCategory));
+  };
 
   const handleSelectedCategory = (id) => {
-    setSelected(categories.find((category)=>category.id === id))
-  }
+    setSelected(categories.find((category) => category.id === id));
+  };
 
   const handleUpdateCategory = (param) => {
-    setCategories(categories.map((category)=> category.id === param.id ? {...category, ...param} : category))
+    setCategories(
+      categories.map((category) =>
+        category.id === param.id ? { ...category, ...param } : category
+      )
+    );
     // console.log("updateCategory", param)
-  }
+  };
 
   const handleDeleteCategory = (id) => {
-    setCategories(categories.filter((category)=>category.id !== id))
-  }
+    setCategories(categories.filter((category) => category.id !== id));
+  };
   // ***** End Categories *****
 
 
  
+
   // ***** Courses *****
   const handleSaveCourse = (form) => {
     setCourses(courses.concat(form))
@@ -54,6 +58,8 @@ function App() {
   const handleDeleteCourse = (id) => {
     setCourses(courses.filter((course) => course.id !== id))
   }
+
+  
 
   console.log("course",courses)
 
