@@ -145,10 +145,10 @@ export const NewCourse = ({categories, onSave, selected, onUpdate}) => {
         })
     }
 
-    const handleDeleteLesson = (cid, id) => {
+    const handleDeleteLesson = (chapterId, lessonId) => {
         const upChapter = form.chapters.map((chapter)=>{
-            if(chapter.id === cid ){
-               const uplesson = chapter.lessons.filter((lesson)=>lesson.id !== id)
+            if(chapter.id === chapterId ){
+               const uplesson = chapter.lessons.filter((lesson)=>lesson.id !== lessonId)
                 return{
                     ...chapter,
                     lessons : uplesson

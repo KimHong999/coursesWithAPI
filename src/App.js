@@ -44,6 +44,7 @@ function App() {
 
   const handleDeleteCategory = (id) => {
     setCategories(categories.filter((category) => category.id !== id));
+    setCourses(courses.filter(course=>course.category_id!== id));
   };
   // ***** End Categories *****
 
