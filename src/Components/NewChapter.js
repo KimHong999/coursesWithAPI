@@ -46,8 +46,10 @@ export const NewChapter = ({onChangeChapter, onChangeLesson, chapterIndex, chapt
         <form>
             <div className="flex justify-between">
                 <div className="text-xl">Add Chapter</div>
-                <ButtonGreen label="Add Chapter" onClick={handleAddChapter} />
-                <ButtonRed label="Delete Chapter" onClick={()=>onDelete(chapterForm.id)} />
+                <div>
+                    <ButtonGreen label="Add Chapter" onClick={handleAddChapter} />
+                    <ButtonRed label="Delete Chapter" onClick={()=>onDelete(chapterForm.id)} />
+                </div>
             </div>
             <TextFieldInput label="name:" name="name" value={chapterForm.name} placeholder="name" onChange={(e)=>onChangeChapter(e, chapterIndex)} />
             <TextArea label="summarize" name="summarize" value={chapterForm.summarize} placeholder="input field" onChange={(e)=>onChangeChapter(e, chapterIndex)} /> 

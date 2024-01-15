@@ -11,8 +11,10 @@ export const NewLesson = ({chapterIndex, lessonIndex, lessonForm, onChangeLesson
         <form>
             <div className="flex justify-between">
                 <div className="text-xl">Add Lesson</div>
-                <ButtonGreen label="Add Lesson" onClick={()=>onAddLesson(chapterIndex)} />
-                <ButtonRed label="Delete Lesson" onClick={()=>onDelete(chapterForm.id, lessonForm.id)} />
+                <div>
+                    <ButtonGreen label="Add Lesson" onClick={()=>onAddLesson(chapterIndex)} />
+                    <ButtonRed label="Delete Lesson" onClick={()=>onDelete(chapterForm.id, lessonForm.id)} />
+                </div>
             </div>         
             <TextFieldInput label="name:" name="name" value={lessonForm.name} placeholder="name" onChange={(e) => onChangeLesson(e, lessonIndex, chapterIndex)} />
             <TextArea label="content" name="content" value={lessonForm.content} placeholder="input field" onChange={(e) => onChangeLesson(e, lessonIndex, chapterIndex)} />
