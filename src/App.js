@@ -63,6 +63,10 @@ function App() {
     setSelectCourse(courses.find((course)=>course.id===id))
   }
 
+  const handleUpdateCourse = (param) =>{
+    setCourses(courses.map((course)=>course.id === param.id ? {...course, ...param} : course))
+  }
+
   
 
   console.log("course",courses)
@@ -77,7 +81,7 @@ function App() {
         <div className='text-xl font-bold mt-8'>Course Management</div>
           <MainTable courses={courses} categories={categories} onDelete={handleDeleteCourse} onSelect={handleSelectedCourse} />
           <div className='flex justify-center item-center'>
-            <NewCourse categories={categories} onSave={handleSaveCourse} selected={selectCourse}  />
+            <NewCourse categories={categories} onSave={handleSaveCourse} selected={selectCourse} onUpdate={handleUpdateCourse} />
           </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import {  ButtonBlue, ButtonGreen, TextArea, TextFieldInput } from "./Input";
+import {  ButtonBlue, ButtonGreen, ButtonRed, TextArea, TextFieldInput } from "./Input";
 
-export const NewLesson = ({chapterIndex, lessonIndex, lessonForm, onChangeLesson, onAddLesson }) => {
+export const NewLesson = ({chapterIndex, lessonIndex, lessonForm, onChangeLesson, onAddLesson, onDelete, chapterForm }) => {
 
     // console.log("chapter index",chapterIndex)
     // console.log("lessonIndex",lessonIndex)
@@ -12,6 +12,7 @@ export const NewLesson = ({chapterIndex, lessonIndex, lessonForm, onChangeLesson
             <div className="flex justify-between">
                 <div className="text-xl">Add Lesson</div>
                 <ButtonGreen label="Add Lesson" onClick={()=>onAddLesson(chapterIndex)} />
+                <ButtonRed label="Delete Lesson" onClick={()=>onDelete(chapterForm.id, lessonForm.id)} />
             </div>         
             <TextFieldInput label="name:" name="name" value={lessonForm.name} placeholder="name" onChange={(e) => onChangeLesson(e, lessonIndex, chapterIndex)} />
             <TextArea label="content" name="content" value={lessonForm.content} placeholder="input field" onChange={(e) => onChangeLesson(e, lessonIndex, chapterIndex)} />

@@ -3,7 +3,7 @@ import {  ButtonBlue, TextArea, TextFieldInput, TextSelect } from "./Input";
 import { NewChapter } from "./NewChapter";
 import { uuidv4 } from "../util";
 
-export const NewCourse = ({categories, onSave, selected}) => {
+export const NewCourse = ({categories, onSave, selected, onUpdate}) => {
 
     const [form, setForm] = useState({
         name:"", 
@@ -48,8 +48,8 @@ export const NewCourse = ({categories, onSave, selected}) => {
     const onChangeLesson = (e, lessonIndex,  chapterIndex) => {
         const name = e.target.name;
         const value = e.target.value;
-        console.log("chaper", chapterIndex)
-        console.log("les",lessonIndex)
+        // console.log("chaper", chapterIndex)
+        // console.log("les",lessonIndex)
 
         setForm((pre)=>{
             // console.log(pre.chapters)
@@ -58,8 +58,9 @@ export const NewCourse = ({categories, onSave, selected}) => {
                 ...pre
             }
         })
-        console.log("form", form)
+        // console.log("form", form)
     }
+
 
 
     // ***** onSave *****
@@ -85,10 +86,32 @@ export const NewCourse = ({categories, onSave, selected}) => {
             }]
         })
     }
-    console.log("save",form)
+    // console.log("save ",form)
 
 
-    console.log("se",selected)
+
+    const handleUpdateCourse = () =>{
+        onUpdate(form)
+        setForm({
+            name:"", 
+            category_id:"", 
+            summarize:"",
+            chapters:[{
+                id:uuidv4(),
+                name:"",
+                summarize:"",
+                lessons:[{
+                    id:uuidv4(),
+                    name:"",
+                    content:""
+                }]
+            }]
+        })
+    }
+
+
+
+    // ***** select *****
     useEffect(()=>{
         if(!selected){
             setForm({
@@ -113,6 +136,36 @@ export const NewCourse = ({categories, onSave, selected}) => {
    
     // console.log("save",form)
 
+    const handleDeleteChapter = (id) => {
+        setForm((pre)=>{
+            return{
+                ...pre,
+                chapters : form.chapters.filter((chapter)=>chapter.id !== id)
+            }
+        })
+    }
+
+    const handleDeleteLesson = (cid, id) => {
+        const upChapter = form.chapters.map((chapter)=>{
+            if(chapter.id === cid ){
+               const uplesson = chapter.lessons.filter((lesson)=>lesson.id !== id)
+                return{
+                    ...chapter,
+                    lessons : uplesson
+                }
+            }   
+            return chapter
+        })
+        setForm((pre)=>{
+            return{
+                ...pre,
+                chapters : upChapter
+            }
+        })
+    }
+    
+    // form.chapters.filter((chapter)=>chapter.id !== id)
+
     return (
         <div class="mt-6 block w-7/12 rounded-lg bg-gray-200 p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
             <form className="shadow-md rounded px-6 pt-6 pb-6 ">
@@ -129,14 +182,15 @@ export const NewCourse = ({categories, onSave, selected}) => {
 
                 {
                     form?.chapters?.map((chapterForm, index)=>(
-                    <NewChapter key={index} chapterIndex={index} chapterForm={chapterForm} onChangeChapter={onChangeChapter} onChangeLesson={onChangeLesson} setForm={setForm} form={form} />
+                    <NewChapter key={index} chapterIndex={index} chapterForm={chapterForm} onChangeChapter={onChangeChapter} onChangeLesson={onChangeLesson} setForm={setForm} form={form} onDelete={handleDeleteChapter} onDeleteLesson={handleDeleteLesson} />
                     ))
                 }
 
                 
                 
-                <div className="flex justify-center item-center mt-10">
+                <div className="flex justify-evenly item-center mt-10">
                     <ButtonBlue label="Save Course" onClick={handleSaveCourse}  />
+                    <ButtonBlue label="Update Form" onClick={handleUpdateCourse} />
                 </div>
             </form>
 
