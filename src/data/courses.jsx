@@ -3,6 +3,7 @@ const courseData = [
   {
     id: uuidv4(),
     name: "Web Development Basics",
+    shift:[3, 2],
     summarize: "Learn the fundamentals of web development.",
     category_id: "cat-1234",
     chapters: [
@@ -29,6 +30,7 @@ const courseData = [
       {
         id: uuidv4(),
         name: "Introduction to CSS",
+        shift:[1, 3],
         summarize: "Styling web pages with CSS.",
         lessons: [
           {
@@ -52,6 +54,7 @@ const courseData = [
   {
     id: uuidv4(),
     name: "JavaScript Fundamentals",
+    shift:[3, 1],
     summarize: "Introduction to programming with JavaScript.",
     category_id: "cat-2234",
     chapters: [

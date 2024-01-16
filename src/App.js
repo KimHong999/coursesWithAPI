@@ -61,7 +61,7 @@ function App() {
   }
 
   const handleSelectedCourse = (id) => {
-    setSelectCourse(courses.find((course)=>course.id===id))
+    setSelectCourse(courses.find((course)=>course.id === id))
   }
 
   const handleUpdateCourse = (param) =>{
