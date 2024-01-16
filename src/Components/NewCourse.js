@@ -2,12 +2,16 @@ import React, { useEffect, useState } from "react";
 import {  ButtonBlue, TextArea, TextFieldInput, TextSelect } from "./Input";
 import { NewChapter } from "./NewChapter";
 import { uuidv4 } from "../util";
+import CreatetableSelect from 'react-select/creatable'
 
 export const NewCourse = ({categories, onSave, selected, onUpdate}) => {
+
+    const [selectedOptioins, setSelectedOptions] = useState([])
 
     const [form, setForm] = useState({
         name:"", 
         category_id:"", 
+        shift:"",
         summarize:"",
         chapters:[{
             id:uuidv4(),
@@ -20,6 +24,7 @@ export const NewCourse = ({categories, onSave, selected, onUpdate}) => {
             }]
         }]
     })
+    console.log("form", form)
 
 
     // ***** onChange *****
@@ -73,6 +78,7 @@ export const NewCourse = ({categories, onSave, selected, onUpdate}) => {
         setForm({
             name:"", 
             category_id:"", 
+            shift:"",
             summarize:"",
             chapters:[{
                 id:uuidv4(),
@@ -85,6 +91,7 @@ export const NewCourse = ({categories, onSave, selected, onUpdate}) => {
                 }]
             }]
         })
+        setSelectedOptions("")
     }
     // console.log("save ",form)
 
@@ -117,6 +124,7 @@ export const NewCourse = ({categories, onSave, selected, onUpdate}) => {
             setForm({
                 name:"", 
                 category_id:"", 
+                shift:"",
                 summarize:"",
                 chapters:[{
                     id:uuidv4(),
@@ -163,6 +171,24 @@ export const NewCourse = ({categories, onSave, selected, onUpdate}) => {
             }
         })
     }
+
+    const shift = [
+        { value: 'Morning', label: 'Morning' },
+        { value: 'afternoon', label: 'afternoon' },
+        { value: 'evening', label: 'evening' }
+
+    ]
+
+    const handleSelectedOptioins = (selectedOptioins) =>{
+        setSelectedOptions(selectedOptioins)
+        setForm((pre)=>{
+            return{
+                ...pre,
+                shift : selectedOptioins.map(sel=>sel.value) 
+            }
+        })
+        console.log("selected options", selectedOptioins)
+    }
     
     // form.chapters.filter((chapter)=>chapter.id !== id)
 
@@ -178,7 +204,13 @@ export const NewCourse = ({categories, onSave, selected, onUpdate}) => {
                         <TextSelect label="Categories: " name="category_id" value={form.category_id} placeholder="select category" options={categories} onChange={onChangeCourse} />
                     </div>          
                 </div>
+
+                <label>choose study shift</label>
+                <CreatetableSelect  options={shift} isMulti value={selectedOptioins} onChange={handleSelectedOptioins} name="shift" />
+
+
                 <TextArea label="summarize" name="summarize" value={form.summarize} placeholder="please input field" onChange={onChangeCourse} />
+
 
                 {
                     form?.chapters?.map((chapterForm, index)=>(
