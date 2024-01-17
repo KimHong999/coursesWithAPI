@@ -5,26 +5,26 @@ import { uuidv4 } from "../util";
 import CreatetableSelect from 'react-select/creatable'
 
 
-const shift = [
+const tag = [
        
     { value: 1, label: 'Morning' },
     { value: 2, label: 'Afternoon' },
     { value: 3, label: 'Evening' },
-    { value: 4, label:'jfds'}
+    { value: 4, label: 'jfds'}
 ]
 
 
 export const NewCourse = ({categories, onSave, selected, onUpdate}) => {
 
     const [selectedOptioins, setSelectedOptions] = useState([])
-    // const [opts, setOpts] = useState(shift)
-    const [opts, setOpts] = useState(shift.map(option => ({ value: option.value, label: option.label })));
+    // const [opts, setOpts] = useState(tag)
+    const [opts, setOpts] = useState(tag.map(option => ({ value: option.value, label: option.label })));
 
 
     const [form, setForm] = useState({
         name:"", 
         category_id:"", 
-        shift:[],
+        tag:[],
         summarize:"",
         chapters:[{
             id:uuidv4(),
@@ -92,7 +92,7 @@ export const NewCourse = ({categories, onSave, selected, onUpdate}) => {
         setForm({
             name:"", 
             category_id:"", 
-            shift:[],
+            tag:[],
             summarize:"",
             chapters:[{
                 id:uuidv4(),
@@ -116,7 +116,7 @@ export const NewCourse = ({categories, onSave, selected, onUpdate}) => {
         setForm({
             name:"", 
             category_id:"", 
-            shift:[],
+            tag:[],
             summarize:"",
             chapters:[{
                 id:uuidv4(),
@@ -140,7 +140,7 @@ export const NewCourse = ({categories, onSave, selected, onUpdate}) => {
             setForm({
                 name:"", 
                 category_id:"", 
-                shift:[],
+                tag:[],
                 summarize:"",
                 chapters:[{
                     id:uuidv4(),
@@ -157,7 +157,7 @@ export const NewCourse = ({categories, onSave, selected, onUpdate}) => {
             return 
         }
         // const selectedOpt = {
-        //     shift:selectedOptioins.map(sel=>sel.value)
+        //     tag:selectedOptioins.map(sel=>sel.value)
         // }
 
 
@@ -165,13 +165,13 @@ export const NewCourse = ({categories, onSave, selected, onUpdate}) => {
         setForm(selected)
        
 
-        setSelectedOptions(opts.filter((selOpt)=>selected.shift.includes(selOpt.value)))
+        setSelectedOptions(opts.filter((selOpt)=>selected.tag.includes(selOpt.value)))
 
 
 
-        // setSelectedOptions(shift.filter((shiftOpt)=> shiftOpt.id === form.shift.value))
-        // console.log("form select", form.shift)
-         console.log("selectt",selected.shift)
+        // setSelectedOptions(tag.filter((tagOpt)=> tagOpt.id === form.tag.value))
+        // console.log("form select", form.tag)
+         console.log("selectt",selected.tag)
 
         
     },[selected])
@@ -214,7 +214,7 @@ export const NewCourse = ({categories, onSave, selected, onUpdate}) => {
         setForm((pre)=>{
             return{
                 ...pre,
-                shift : selectedOptioins.map(sel=>sel.value) 
+                tag : selectedOptioins.map(sel=>sel.value) 
             }
         })
         console.log("selected options", selectedOptioins)
@@ -245,8 +245,8 @@ export const NewCourse = ({categories, onSave, selected, onUpdate}) => {
                 </div>
 
 
-                <label>choose study shift</label>
-                <CreatetableSelect  options={opts} onCreateOption={handleCreate} isMulti value={selectedOptioins} onChange={handleSelectedOptioins} name="shift" closeMenuOnSelect={false} />
+                <label>choose study tag</label>
+                <CreatetableSelect  options={opts} onCreateOption={handleCreate} isMulti value={selectedOptioins} onChange={handleSelectedOptioins} name="tag" closeMenuOnSelect={false} />
 
 
 
