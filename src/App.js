@@ -1,5 +1,5 @@
 
-import { React, useMemo, useState } from 'react';
+import { React, useEffect, useMemo, useState } from 'react';
 import './App.css';
 import { CategoryManagement } from './Components/CategoryManagement';
 import { Table } from './Components/Table';
@@ -9,22 +9,51 @@ import { NewCourse } from './Components/NewCourse';
 import categoryData from './data/categories';
 import courseData from './data/courses'
 
+import { list } from './service/courses';
+import { list as listCategories } from './service/category';
+
 function App() {
 
-  const [categories, setCategories] = useState(categoryData)
-  const [courses, setCourses] = useState(courseData)
+  const [categories, setCategories] = useState([])
+  const [courses, setCourses] = useState([])
 
   const [selected, setSelected] = useState({})
   const [selectCourse, setSelectCourse] = useState(null)
 
  
+  useEffect(()=>{
+    const fetchCategories = async() =>{
+      try{
+        const response = await listCategories();
+        setCategories(response)
+      } catch (error) {
+        console.log("error", error)
+      }
+    };
+
+    fetchCategories();
+  },[])
+
+
+  useEffect(()=>{
+    const fetchCourses = async() => {
+      try{
+        const response = await list();
+        setCourses(response)
+      } catch (error) {
+        console.log("error", error)
+      }
+    };
+
+    fetchCourses();
+  },[])
 
 
   // ***** Categories *****
   const handleSaveCategory = (param) => {
     const newCategory = {
       ...param,
-      id: uuidv4(),
+      // id: uuidv4(),
     };
     setCategories(categories.concat(newCategory));
   };
@@ -49,6 +78,7 @@ function App() {
   // ***** End Categories *****
 
 
+
  
 
   // ***** Courses *****
@@ -62,6 +92,7 @@ function App() {
 
   const handleSelectedCourse = (id) => {
     setSelectCourse(courses.find((course)=>course.id === id))
+    // console.log("select", selectCourse)
   }
 
   const handleUpdateCourse = (param) =>{
@@ -69,14 +100,14 @@ function App() {
   }
 
   
-
-  console.log("course",courses)
+  // console.log("categories", categories)
+  // console.log("course",courses)
 
   return (
     <div>
       <div className="grid grid-cols-2 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <Table categories={categories} onDelete={handleDeleteCategory} onSelect={handleSelectedCategory} />
-        <CategoryManagement onSave={handleSaveCategory} selected={selected} onUpdate={handleUpdateCategory}  />
+        <Table categories={categories} onDelete={handleDeleteCategory} onSelect={handleSelectedCategory} setCategories={setCategories} />
+        <CategoryManagement onSave={handleSaveCategory} selected={selected} onUpdate={handleUpdateCategory}  categories={categories} />
       </div>
       <div>
         <div className='text-xl font-bold mt-8'>Course Management</div>

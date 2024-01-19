@@ -1,5 +1,7 @@
 import React, { useMemo } from "react";
 import { ButtonBlue, ButtonRed } from "./Input";
+import { destroy } from "../service/courses";
+
 
 export const MainTable = ({courses, categories, onDelete, onSelect}) => {
 
@@ -7,15 +9,15 @@ export const MainTable = ({courses, categories, onDelete, onSelect}) => {
      const data = useMemo (()=>{
         const result = courses.map(course=> { 
             // const totalallLesson = course.chapters.reduce((sum, chaper)=> sum + chaper.lesson.length, 0 )
-            const totalLessons = course.chapters.reduce(
+            const totalLessons = course?.chapters?.reduce(
                 (sum, chapter) => sum + chapter.lessons.length,
                 0
               );
 
             return {
                 ...course,
-                category:categories.find(cate=>cate.id===course.category_id).name,
-                totalChaper : course.chapters.length,
+                category:categories?.find(cate=>cate.id===course.category_id)?.name,
+                totalChaper : course?.chapters?.length,
                 totalLesson : totalLessons
             }
             
@@ -37,7 +39,7 @@ export const MainTable = ({courses, categories, onDelete, onSelect}) => {
                         <tr>
                         <th scope="col" className="px-6 py-4">id</th>
                         <th scope="col" className="px-6 py-4">Name</th>
-                        <th scope="col" className="px-6 py-4">summarize</th>
+                        <th scope="col" className="px-6 py-4">summary</th>
                         <th scope="col" className="px-6 py-4">Categories</th>
                         <th scope="col" className="px-6 py-4">Total Chapter</th>
                         <th scope="col" className="px-6 py-4">Total Lesson</th>
@@ -52,15 +54,15 @@ export const MainTable = ({courses, categories, onDelete, onSelect}) => {
                                 <tr key={item.id} className="border-b transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-neutral-600" >
                                     <td className="whitespace-nowrap px-6 py-4" >{item.id}</td>
                                     <td className="whitespace-nowrap px-6 py-4" >{item.name}</td>
-                                    <td className="whitespace-nowrap px-6 py-4" >{item.summarize}</td>
-                                    <td className="whitespace-nowrap px-6 py-4" >{categories.find(cate=> cate.id === item.category_id).name}</td>
+                                    <td className="whitespace-nowrap px-6 py-4" >{item.summary}</td>
+                                    <td className="whitespace-nowrap px-6 py-4" >{categories?.find(cate=> cate.id === item.category_id)?.name}</td>
                                     <td className="whitespace-nowrap px-6 py-4">{item.totalChaper}</td>
                                     <td className="whitespace-nowrap px-6 py-4">{item.totalLesson}</td>
                                     <td className="whitespace-nowrap px-6 py-4">
                                         <ButtonBlue label="Edit" onClick={()=> onSelect(item.id)}  />
                                     </td>
                                     <td className="whitespace-nowrap px-6 py-4">
-                                        <ButtonRed label="Delete" onClick={() => onDelete(item.id)} />
+                                        <ButtonRed label="Delete" onClick={() => destroy(item.id).then((response)=>onDelete(item.id)).catch((error)=>console.log("error", error)) } />
                                     </td>
                                 </tr>
                             ))

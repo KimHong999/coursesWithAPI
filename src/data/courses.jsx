@@ -3,14 +3,14 @@ const courseData = [
   {
     id: uuidv4(),
     name: "Web Development Basics",
-    tag:[3, 2],
-    summarize: "Learn the fundamentals of web development.",
+    tags:[3, 2],
+    summary: "Learn the fundamentals of web development.",
     category_id: "cat-1234",
     chapters: [
       {
         id: uuidv4(),
         name: "Introduction to HTML",
-        summarize: "Understanding the basics of HTML.",
+        summary: "Understanding the basics of HTML.",
         lessons: [
           {
             id: uuidv4(),
@@ -20,7 +20,7 @@ const courseData = [
           },
           {
             id: uuidv4(),
-            name: "HTML Tags",
+            name: "HTML tagss",
             content:
               "Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque sint neque id rem magnam, alias optio temporibus quos vel quis esse similique asperiores obcaecati. Labore nobis temporibus exercitationem ut dicta!",
           },
@@ -30,8 +30,8 @@ const courseData = [
       {
         id: uuidv4(),
         name: "Introduction to CSS",
-        tag:[1, 3],
-        summarize: "Styling web pages with CSS.",
+        tags:[1, 3],
+        summary: "Styling web pages with CSS.",
         lessons: [
           {
             id: uuidv4(),
@@ -54,14 +54,14 @@ const courseData = [
   {
     id: uuidv4(),
     name: "JavaScript Fundamentals",
-    tag:[3, 1],
-    summarize: "Introduction to programming with JavaScript.",
+    tags:[3, 1],
+    summary: "Introduction to programming with JavaScript.",
     category_id: "cat-2234",
     chapters: [
       {
         id: uuidv4(),
         name: "Basic JavaScript Syntax",
-        summarize: "Understanding the basics of JavaScript syntax.",
+        summary: "Understanding the basics of JavaScript syntax.",
         lessons: [
           {
             id: uuidv4(),

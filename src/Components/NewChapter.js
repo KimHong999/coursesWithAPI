@@ -11,7 +11,7 @@ export const NewChapter = ({onChangeChapter, onChangeLesson, chapterIndex, chapt
             const addChapter = {
                 id : uuidv4(),
                 name : "",
-                summarize : "",
+                summary : "",
                 lessons: [{
                     id: uuidv4(),
                     name:"",
@@ -52,7 +52,7 @@ export const NewChapter = ({onChangeChapter, onChangeLesson, chapterIndex, chapt
                 </div>
             </div>
             <TextFieldInput label="name:" name="name" value={chapterForm.name} placeholder="name" onChange={(e)=>onChangeChapter(e, chapterIndex)} />
-            <TextArea label="summarize" name="summarize" value={chapterForm.summarize} placeholder="input field" onChange={(e)=>onChangeChapter(e, chapterIndex)} /> 
+            <TextArea label="summary" name="summary" value={chapterForm.summary} placeholder="input field" onChange={(e)=>onChangeChapter(e, chapterIndex)} /> 
 
             {
                 chapterForm.lessons.map((lessonForm, index)=>(

@@ -1,9 +1,14 @@
 import React from "react"; 
 import { ButtonBlue, ButtonRed } from "./Input";
+import {  destroy } from "../service/category";
 
-export const Table = ({categories, onDelete, onSelect}) => {
+export const Table = ({categories, onDelete, onSelect, setCategories}) => {
 
-    
+    // console.log("id", categories.id)
+
+    // const handleDeleteCategoy = () =>{
+    //     DELETE_CATEGORY_BY_ID(categories.id).then((response)=>{alert("deleted")}).catch((error)=>console.log("error delete : ",error))
+    // }
 
 
     // console.log("cat",categories)
@@ -30,7 +35,9 @@ export const Table = ({categories, onDelete, onSelect}) => {
                                 <ButtonBlue label="Edit" onClick={()=> onSelect(category.id)} />
                             </td>
                             <td>
-                                <ButtonRed label="Delete" onClick={() => onDelete(category.id) } />
+                                <ButtonRed label="Delete" onClick={()=>{
+                                    destroy(category.id).then((response)=>onDelete(category.id)).catch((error)=>console.log("error delete : ",error))
+                                }} />
                             </td>
                         </tr>
                     ))

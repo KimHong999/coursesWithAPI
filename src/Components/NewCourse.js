@@ -4,32 +4,36 @@ import { NewChapter } from "./NewChapter";
 import { uuidv4 } from "../util";
 import CreatetableSelect from 'react-select/creatable'
 
+import { createTags, list } from "../service/tags";
+import { create, update } from "../service/courses";
 
-const tag = [
+
+// const tags = [
        
-    { value: 1, label: 'Morning' },
-    { value: 2, label: 'Afternoon' },
-    { value: 3, label: 'Evening' },
-    { value: 4, label: 'jfds'}
-]
+//     { value: 1, label: 'Morning' },
+//     { value: 2, label: 'Afternoon' },
+//     { value: 3, label: 'Evening' },
+//     { value: 4, label: 'jfds'}
+// ]
 
 
 export const NewCourse = ({categories, onSave, selected, onUpdate}) => {
 
     const [selectedOptioins, setSelectedOptions] = useState([])
-    // const [opts, setOpts] = useState(tag)
-    const [opts, setOpts] = useState(tag.map(option => ({ value: option.value, label: option.label })));
+    const [tags, setTags] = useState([])
+    // const [opts, setOpts] = useState(tags)
+    // const [opts, setOpts] = useState(tags.map(option => ({ value: option.id, label: option.name })));
 
 
     const [form, setForm] = useState({
         name:"", 
         category_id:"", 
-        tag:[],
-        summarize:"",
+        tags:[],
+        summary:"",
         chapters:[{
             id:uuidv4(),
             name:"",
-            summarize:"",
+            summary:"",
             lessons:[{
                 id:uuidv4(),
                 name:"",
@@ -37,8 +41,20 @@ export const NewCourse = ({categories, onSave, selected, onUpdate}) => {
             }]
         }]
     })
-    console.log("form", form)
-    console.log("sele",selected)
+
+
+    useEffect(()=>{
+        const fetchTags = async() => {
+            try{
+                const response = await list();
+                setTags(response);
+            } catch (error) {
+                console.log("error", error)
+            }
+        };
+        fetchTags();
+    },[])
+
 
 
     // ***** onChange *****
@@ -83,53 +99,88 @@ export const NewCourse = ({categories, onSave, selected, onUpdate}) => {
 
 
     // ***** onSave *****
-    const handleSaveCourse = () => {
-        const data ={
-            ...form,
-            id : uuidv4()
+    // const handleSaveCourse = () => {
+    //     const data ={
+    //         ...form,
+    //         id : uuidv4()
+    //     }
+    //     onSave(data)
+    //     setForm({
+    //         name:"", 
+    //         category_id:"", 
+    //         tags:[],
+    //         summary:"",
+    //         chapters:[{
+    //             id:uuidv4(),
+    //             name:"",
+    //             summary:"",
+    //             lessons:[{
+    //                 id:uuidv4(),
+    //                 name:"",
+    //                 content:""
+    //             }]
+    //         }]
+    //     })
+    //     setSelectedOptions("")
+    // }
+
+    const handleSaveCourse = async () => {
+        try{
+            // console.log("fomr",form)
+            const response = await create(form)
+            console.log("response", response)
+            onSave(response)
+            setForm({
+                        name:"", 
+                        category_id:"", 
+                        tags:[],
+                        summary:"",
+                        chapters:[{
+                            id:uuidv4(),
+                            name:"",
+                            summary:"",
+                            lessons:[{
+                                id:uuidv4(),
+                                name:"",
+                                content:""
+                            }]
+                        }]
+                    })
+            setSelectedOptions("")
+        } catch(error) {
+            console.log("error", error)
         }
-        onSave(data)
-        setForm({
-            name:"", 
-            category_id:"", 
-            tag:[],
-            summarize:"",
-            chapters:[{
-                id:uuidv4(),
-                name:"",
-                summarize:"",
-                lessons:[{
-                    id:uuidv4(),
-                    name:"",
-                    content:""
-                }]
-            }]
-        })
-        setSelectedOptions("")
     }
+
     // console.log("save ",form)
 
 
 
-    const handleUpdateCourse = () =>{
-        onUpdate(form)
-        setForm({
-            name:"", 
-            category_id:"", 
-            tag:[],
-            summarize:"",
-            chapters:[{
-                id:uuidv4(),
-                name:"",
-                summarize:"",
-                lessons:[{
+
+    const handleUpdateCourse =  async(id) => {
+        try{
+            const response = await update(id, form);
+            onUpdate(form)
+            setForm({
+                name:"", 
+                category_id:"", 
+                tags:[],
+                summary:"",
+                chapters:[{
                     id:uuidv4(),
                     name:"",
-                    content:""
+                    summary:"",
+                    lessons:[{
+                        id:uuidv4(),
+                        name:"",
+                        content:""
+                    }]
                 }]
-            }]
-        })
-        setSelectedOptions([])
+            })
+
+        } catch(error) {
+            console.log("error", error)
+        }
     }
 
 
@@ -140,12 +191,12 @@ export const NewCourse = ({categories, onSave, selected, onUpdate}) => {
             setForm({
                 name:"", 
                 category_id:"", 
-                tag:[],
-                summarize:"",
+                tags:[],
+                summary:"",
                 chapters:[{
                     id:uuidv4(),
                     name:"",
-                    summarize:"",
+                    summary:"",
                     lessons:[{
                         id:uuidv4(),
                         name:"",
@@ -157,22 +208,22 @@ export const NewCourse = ({categories, onSave, selected, onUpdate}) => {
             return 
         }
         // const selectedOpt = {
-        //     tag:selectedOptioins.map(sel=>sel.value)
+        //     tags:selectedOptioins.map(sel=>sel.value)
         // }
 
-
+        setTags(tags.map(tag=>({value:tag.id, label:tag.name})))
         
         setForm(selected)
+        // setTags(selected)
        
+        console.log("selected", selected)
+        console.log("tags", tags)
+        // setSelectedOptions(opts.filter((selOpt)=>selected.tags.includes(selOpt.value)))
+        // console.log("tags", tags)
 
-        setSelectedOptions(opts.filter((selOpt)=>selected.tag.includes(selOpt.value)))
+        // console.log("ed")
 
-
-
-        // setSelectedOptions(tag.filter((tagOpt)=> tagOpt.id === form.tag.value))
-        // console.log("form select", form.tag)
-         console.log("selectt",selected.tag)
-
+        // setTags(tags.filter(tag=>selected.tags.includes(tag.value)))
         
     },[selected])
    
@@ -214,11 +265,11 @@ export const NewCourse = ({categories, onSave, selected, onUpdate}) => {
         setForm((pre)=>{
             return{
                 ...pre,
-                tag : selectedOptioins.map(sel=>sel.value) 
+                tags : selectedOptioins.map(sel=>({value:sel.value})) 
             }
         })
-        console.log("selected options", selectedOptioins)
-        console.log("select opts", opts)
+        // console.log("selected options", selectedOptioins)
+        // console.log("select opts", opts)
     }
 
 
@@ -227,7 +278,7 @@ export const NewCourse = ({categories, onSave, selected, onUpdate}) => {
             value : inputValue,
             label : inputValue
         }
-        setOpts([...opts, newOption])
+        setTags([...tags, newOption])
     }
     // form.chapters.filter((chapter)=>chapter.id !== id)
 
@@ -245,12 +296,12 @@ export const NewCourse = ({categories, onSave, selected, onUpdate}) => {
                 </div>
 
 
-                <label>choose study tag</label>
-                <CreatetableSelect  options={opts} onCreateOption={handleCreate} isMulti value={selectedOptioins} onChange={handleSelectedOptioins} name="tag" closeMenuOnSelect={false} />
+                <label>choose study tags</label>
+                <CreatetableSelect  options={tags.map(tag=>({value:tag.id, label:tag.name}))} onCreateOption={handleCreate} isMulti value={selectedOptioins} onChange={handleSelectedOptioins} name="tags" closeMenuOnSelect={false} />
 
 
 
-                <TextArea label="summarize" name="summarize" value={form.summarize} placeholder="please input field" onChange={onChangeCourse} />
+                <TextArea label="summary" name="summary" value={form.summary} placeholder="please input field" onChange={onChangeCourse} />
 
 
                 {
